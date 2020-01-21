@@ -1,23 +1,34 @@
 
 
 "#viewScore"
-"#startQuiz"
+var startQuizEl = document.querySelector("#startQuiz");
 
 var counterEl = document.getElementById("#counter");
 let secondsLeft = 75;
 
+// This function is for the button action.
+startQuizEl.addEventListener("click", function(event) {
+    event.preventDefault();
+  
+    setTime();
+  });
+
 // This function is for setting up the count down
-function setTime() {
+function setTime(bol) {
     var timerInterval = setInterval(function() {
-      secondsLeft--;
-      counterEl.textContent = secondsLeft;
+      counterEl.oninput = secondsLeft;
+
+      if (bol) {
+          secondsLeft = secondsLeft-10;
+      }
+      else {
+        secondsLeft--;
+      }
   
       // this is to stop the function from looping and start over
       if(secondsLeft === 0) {
         clearInterval(timerInterval);
-        sendMessage();
       }
   
     }, 1000);
-    // 1000ms is the time to wait before secondsLeft counting down
   }
