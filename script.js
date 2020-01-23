@@ -8,9 +8,11 @@ let secondsLeft = 75;
 
 // This function is for the button action.
 startQuizEl.addEventListener("click", function(event) {
-    event.preventDefault();
-  
-    setTime();
+    event.preventDefault();  
+    setTime(true);
+
+    
+
   });
 
 // This function is for setting up the count down
