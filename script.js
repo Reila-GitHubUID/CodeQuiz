@@ -1,24 +1,27 @@
 
 
 "#viewScore"
-var startQuizEl = document.querySelector("#startQuiz");
+var startQuizButton = document.querySelector("#startQuiz");
 
-var counterEl = document.getElementById("#counter");
+var counter = document.getElementById("#counter");
 let secondsLeft = 75;
 
-// This function is for the button action.
-startQuizEl.addEventListener("click", function(event) {
+// This line of code will activate when a user click the Start Quiz button
+startQuizButton.addEventListener("click", function(event) {
     event.preventDefault();  
     setTime(true);
+    startGame();
+});
 
-    
+// This function is to start the game.
+function startGame() {
 
-  });
+}
 
 // This function is for setting up the count down
 function setTime(bol) {
     var timerInterval = setInterval(function() {
-      counterEl.oninput = secondsLeft;
+      counter.oninput = secondsLeft;
 
       if (bol) {
           secondsLeft = secondsLeft-10;
