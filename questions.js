@@ -1,5 +1,5 @@
-
-var questions = [
+var a = function a(){
+  var questions = [
     {
       title: "Commonly used data types DO NOT include:",
       choices: ["strings", "booleans", "alerts", "numbers"],
@@ -42,4 +42,6 @@ var questions = [
     }
   ];
 
+};
 
+module.exports.a = a;
