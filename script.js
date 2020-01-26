@@ -1,17 +1,27 @@
 
 
 "#viewScore"
-var startQuizButton = document.querySelector("#startQuiz");
+"#startButton"
+"#counter"
 
-var counter = document.getElementById("#counter");
 let secondsLeft = 75;
 
 // This line of code will activate when a user click the Start Quiz button
-startQuizButton.addEventListener("click", function(event) {
-    event.preventDefault();  
-    setTime(true);
-    startGame();
-});
+$(document).ready(function() {
+    $("#startButton").on("click", function() {
+        $("#quizField")
+      const randomNum = Math.floor (Math.random() * 1000)+1;
+      $("#random-number").text(randomNum);
+    });
+
+    // ...
+
+  });
+// startButton.addEventListener("click", function(event) {
+//     event.preventDefault();  
+//     setTime(true);
+//     startGame();
+// });
 
 // This function is to start the game.
 function startGame() {
