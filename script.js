@@ -1,49 +1,44 @@
 
 
-"#viewScore"
-"#startButton"
-"#counter"
+// "#viewScore"
+// "#startButton"
+// "#counter"
+// "#quizField"
 
-let secondsLeft = 75;
+let secondsLeft = 10;
 
 // This line of code will activate when a user click the Start Quiz button
 $(document).ready(function() {
     $("#startButton").on("click", function() {
-        $("#quizField")
-      const randomNum = Math.floor (Math.random() * 1000)+1;
-      $("#random-number").text(randomNum);
+        $("#quizField").empty();
+        startTimer();
+        gameStart();
     });
-
-    // ...
-
-  });
-// startButton.addEventListener("click", function(event) {
-//     event.preventDefault();  
-//     setTime(true);
-//     startGame();
-// });
+});
 
 // This function is to start the game.
-function startGame() {
+function gameStart() {
 
 }
 
 // This function is for setting up the count down
-function setTime(bol) {
+function startTimer() {
     var timerInterval = setInterval(function() {
-      counter.oninput = secondsLeft;
-
-      if (bol) {
-          secondsLeft = secondsLeft-10;
-      }
-      else {
+        $("#counter").text(secondsLeft);
         secondsLeft--;
-      }
-  
-      // this is to stop the function from looping and start over
-      if(secondsLeft === 0) {
-        clearInterval(timerInterval);
-      }
+        
+        // this is to stop the function from looping and start over
+        if(secondsLeft === -1) {
+            clearInterval(timerInterval);
+        }
+        console.log("in in the timer(value) function");
   
     }, 1000);
+  }
+
+  // This function will be triggered when a user answered wrong
+  // The time left for the user will be deducted by 10 seconds
+  function decrementTimer() {
+    secondsLeft = secondsLeft-10;
+    startTimer();
   }
