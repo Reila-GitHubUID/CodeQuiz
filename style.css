@@ -56,3 +56,12 @@ button:hover, #startButton:hover {
   /* width: fit-content; */
   /* vertical-align: right; */
 }
+
+#footer {
+  border-top: rgb(136, 135, 135);
+  color: rgb(136, 135, 135);
+  font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  justify-content: left;
+}

@@ -46,9 +46,9 @@ var questions = [
 // "#counter"
 // "#quizField"
 
-let secondsLeft = 10;
+let secondsLeft = 15; //* questions.length;
 let highScore = 0;
-let questionNumber = 1;
+let questionNumber = 5;
 
 // Initialize local storage for the high score;
 localStorage.setItem("score", highScore);
@@ -67,25 +67,31 @@ $(document).ready(function() {
     
     // This function is to start the game.
     function gameStart() {
-        let questionDiv = $("<h3>");
-        questionDiv.text(questionNumber + ". Commonly used data types DO NOT include:");
-        $("#quizField").append(questionDiv);
+        let theQuestion = questions[questionNumber-1];
 
-        let selectionsDiv = $("<div>").attr("id", "selectButton");
-        selectionsDiv.append($("<button>").text("strings"));
-        selectionsDiv.append($("<button>").text("booleans"));
-        selectionsDiv.append($("<button>").text("alerts"));
-        selectionsDiv.append($("<button>").text("numbers"));
-        $("#quizField").append(selectionsDiv);
+        let $questionDiv = $("<h3>");
+        $questionDiv.text(questionNumber + ". " + theQuestion.title);
+        $("#quizField").append($questionDiv);
 
-        $("button").on('click', function(){              
-            const selectedAnswer = $(this).text();      
-            if(selectedAnswer === 'Peanut Butter Jelly'){
-              alert("Peanut butter jelly");
-              pbjC++;
-              const $img = $('<img>');
-              $img.attr('src', '')
+        let $selectionsDiv = $("<div>").attr("id", "selectButton");
+        for (let i = 0; i < theQuestion.choices.length; i++){
+            $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
+        }
+        $("#quizField").append($selectionsDiv);
+
+        $("button").on('click', function(){     
+            questionNumber++;
+            let $newDiv = $("<div>");
+
+            // Check answer
+            let $selectedAnswer = $(this).text();      
+            if($selectedAnswer === theQuestion.answer){
+              $newDiv.attr("id", "footer").text("Correct!");
             } 
+            else {
+                $newDiv.attr("id", "footer").text("Wrong!");
+            }
+            $("#quizField").append($newDiv);
           });
     }
 
@@ -109,8 +115,5 @@ $(document).ready(function() {
         startTimer();
     }
 
-    function checkAnswer() {
-
-    }
 
 });
