@@ -7,6 +7,7 @@
 
 let secondsLeft = 10;
 let highScore = 0;
+let questionNumber = 1;
 
 // Initialize local storage for the high score;
 localStorage.setItem("score", highScore);
@@ -25,18 +26,15 @@ $(document).ready(function() {
     
     // This function is to start the game.
     function gameStart() {
-        debugger;
-        let questionDiv = $("<h5>");
-        questionDiv.text("Commonly used data types DO NOT include:");
-        // let multipleChoice = $("<ul>");
-        // multipleChoice.append($("<li>").text("strings"));
-        // multipleChoice.append($("<li>").text("booleans"));
-        // multipleChoice.append($("<li>").text("alerts"));
-        // multipleChoice.append($("<li>").text("numbers"));
+        let questionDiv = $("<h3>");
+        questionDiv.text(questionNumber + ". Commonly used data types DO NOT include:");
+        $("#quizField").append(questionDiv);
 
-        $("quizField").append(questionDiv);
-        console.log ("I'm here!")
-        // $("quizField").append(multipleChoice);
+
+        $("#quizField").append($("<button>").attr("id", "startButton").text("strings"));
+        $("#quizField").append($("<button>").attr("id", "startButton").text("booleans"));
+        $("#quizField").append($("<button>").attr("id", "startButton").text("alerts"));
+        $("#quizField").append($("<button>").attr("id", "startButton").text("numbers"));
     }
 
     // This function is for setting up the count down
