@@ -30,11 +30,12 @@ $(document).ready(function() {
         questionDiv.text(questionNumber + ". Commonly used data types DO NOT include:");
         $("#quizField").append(questionDiv);
 
-
-        $("#quizField").append($("<button>").attr("id", "startButton").text("strings"));
-        $("#quizField").append($("<button>").attr("id", "startButton").text("booleans"));
-        $("#quizField").append($("<button>").attr("id", "startButton").text("alerts"));
-        $("#quizField").append($("<button>").attr("id", "startButton").text("numbers"));
+        let selectionsDiv = $("<div>").attr("id", "selectButton");
+        selectionsDiv.append($("<button>").text("strings"));
+        selectionsDiv.append($("<button>").text("booleans"));
+        selectionsDiv.append($("<button>").text("alerts"));
+        selectionsDiv.append($("<button>").text("numbers"));
+        $("#quizField").append(selectionsDiv);
     }
 
     // This function is for setting up the count down

@@ -3,21 +3,21 @@
 }
 
 html {
-  font-size: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
 }
 
 body {
+  font-weight: normal;
   margin: 0;
   padding: 0;
-  font-weight: normal;
 }
 
 .wrapperCenter {
-  width: 500px;
   margin: 0 auto;
-  text-align: center;
   padding-top: 50px;
+  text-align: center;
+  width: 500px;
 }
 
 .wrapperLeft {
@@ -30,7 +30,7 @@ body {
   padding-right: 50px ;
 }
 
-#startButton {
+button, #startButton {
   background-color: rgb(90, 26, 192);
   border-radius: 4px;
   border-style: none;
@@ -42,12 +42,17 @@ body {
   font-weight: 700;
   justify-content: center;
   line-height: 0;
-  padding: 12px;
   margin: 2px;
+  padding: 12px;
 }
 
-
-#startButton:hover {
+button:hover, #startButton:hover {
   background-color: rgba(102, 28, 221, 0.918);
 }
 
+#selectButton {
+  display: flex;
+  flex-direction: column; 
+  /* width: fit-content; */
+  /* vertical-align: right; */
+}
