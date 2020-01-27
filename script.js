@@ -1,4 +1,45 @@
-
+var questions = [
+    {
+      title: "Commonly used data types DO NOT include:",
+      choices: ["strings", "booleans", "alerts", "numbers"],
+      answer: "alerts"
+    },
+    {
+      title: "The condition in an if / else statement is enclosed within ____.",
+      choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
+      answer: "parentheses"
+    },
+    {
+      title: "Arrays in JavaScript can be used to store ____.",
+      choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+      answer: "all of the above"
+    },
+    {
+      title: "String values must be enclosed within ____ when being assigned to variables.",
+      choices: ["commas", "curly brackets", "quotes", "parantheses"],
+      answer: "quotes"
+    },
+    {
+      title: "A very useful tool used during development and debuging for printing content to the debugger is:",
+      choices: ["JavaScript", "terminal / bash", "for loops", "console.log"],
+      answer: "console.log"
+    },
+    {
+      title: "Which of the following is NOT a javascript data type?",
+      choices: ["Array", "Object", "Table", "String"],
+      answer: "Table"
+    },
+    {
+      title: "Which parenthesis type is used to invoke functions?",
+      choices: ["{}", "[]", "||", "()"],
+      answer: "()"
+    },
+    {
+      title: "What will this statement return: console.log('7' == 7)",
+      choices: ["true", "false", "maybe", "depends"],
+      answer: "true"
+    }
+  ];
 
 // "#viewScore"
 // "#startButton"
@@ -36,6 +77,16 @@ $(document).ready(function() {
         selectionsDiv.append($("<button>").text("alerts"));
         selectionsDiv.append($("<button>").text("numbers"));
         $("#quizField").append(selectionsDiv);
+
+        $("button").on('click', function(){              
+            const selectedAnswer = $(this).text();      
+            if(selectedAnswer === 'Peanut Butter Jelly'){
+              alert("Peanut butter jelly");
+              pbjC++;
+              const $img = $('<img>');
+              $img.attr('src', '')
+            } 
+          });
     }
 
     // This function is for setting up the count down
@@ -58,5 +109,8 @@ $(document).ready(function() {
         startTimer();
     }
 
+    function checkAnswer() {
+
+    }
 
 });
