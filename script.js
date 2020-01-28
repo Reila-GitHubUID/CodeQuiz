@@ -46,7 +46,7 @@ var questions = [
 // "#counter"
 // "#quizField"
 
-let secondsLeft = 15; //* questions.length;
+let secondsLeft = 75; //* questions.length;
 let highScore = 0;
 let questionNumber = 1;
 
@@ -68,7 +68,10 @@ $(document).ready(function() {
     
     // This function is to start the game.
     function gameStart() {
-        if (questions.length != questionNumber-1) {
+        let $answerField = $("<div>").addClass("answerField");
+        $("#quizField").empty();   // clear the quiz field        
+
+        if (questions.length >= questionNumber) {
             let theQuestion = questions[questionNumber-1];
 
             let $questionDiv = $("<h3>");
@@ -80,37 +83,42 @@ $(document).ready(function() {
                 $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
             }
             $("#quizField").append($selectionsDiv);
-
-            //reading user answer to the multiple choice
+            
+            // checkAnswer();            
             $("button").on('click', function(){     
                 questionNumber++;
+                $(".answerField").empty();   // clear the answer field 
 
-                if (questionNumber >= 2) {
-
-                    let $answerField = $("<div>");
-
-                    // Check answer
+                if ((questionNumber >= 2) && (questionNumber <= questions.length)) {
+                    // Check answer    
                     let $selectedAnswer = $(this).text();      
                     if($selectedAnswer === theQuestion.answer){
-                    $answerField.attr("id", "footer").text("Correct!");
+                        $answerField.attr("id", "footer").text("Correct!");
+                        gameStart();
                     } 
                     else {
                         $answerField.attr("id", "footer").text("Wrong!");
+                        if (secondsLeft > 10) {
+                            decrementTimer();
+                            gameStart();
+                        }
+                        else {
+                            decrementTimer();
+                        }
                     }
-                    $("#quizField").append($answerField);
-                    gameStart();
-                } 
+                }
                 else {
-
+                    gameEnd();
+                    console.log("LLLLLLLL");
                 }
 
-
-
             });
-            
+            $(".wrapperCenter").append($answerField);
+    
         }
         else {
-            allDone();
+            gameEnd();
+            $(".wrapperCenter").append($answerField);
         }
     }
 
@@ -130,13 +138,19 @@ $(document).ready(function() {
     // This function will be triggered when a user answered wrong
     // The time left for the user will be deducted by 10 seconds
     function decrementTimer() {
-        secondsLeft = secondsLeft-10;
-        startTimer();
+        if (secondsLeft-10 > 0) {
+            secondsLeft = secondsLeft-10;
+        }
+        else if (secondsLeft-10 <=0) {
+            secondsLeft = 0;
+            gameEnd();
+        }
+
     }
 
     // This function executes when the quiz finished
-    function allDone() {
-
+    function gameEnd() {
+        alert ("game over!");
     }
 
     function gameReset() {
