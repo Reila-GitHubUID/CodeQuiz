@@ -60,45 +60,54 @@ $(document).ready(function() {
     // This line of code will activate when a user click the Start Quiz button
     $("#startButton").on("click", function() {
         $("#quizField").empty();   // clear the quiz field
-
         startTimer();
         gameStart();
+
     });
 
     
     // This function is to start the game.
     function gameStart() {
-        $("#quizField").empty();   // clear the quiz field
         if (questions.length != questionNumber-1) {
-            if (questionNumber-1 === 0) {
-                    let theQuestion = questions[questionNumber-1];
+            let theQuestion = questions[questionNumber-1];
 
-                    let $questionDiv = $("<h3>");
-                    $questionDiv.text(questionNumber + ". " + theQuestion.title);
-                    $("#quizField").append($questionDiv);
+            let $questionDiv = $("<h3>");
+            $questionDiv.text(questionNumber + ". " + theQuestion.title);
+            $("#quizField").append($questionDiv);
 
-                    let $selectionsDiv = $("<div>").attr("id", "selectButton");
-                    for (let i = 0; i < theQuestion.choices.length; i++){
-                        $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
-                    }
-                    $("#quizField").append($selectionsDiv);
-
-                    $("button").on('click', function(){     
-                        questionNumber++;
-                        let $newDiv = $("<div>");
-
-                        // Check answer
-                        let $selectedAnswer = $(this).text();      
-                        if($selectedAnswer === theQuestion.answer){
-                        $newDiv.attr("id", "footer").text("Correct!");
-                        } 
-                        else {
-                            $newDiv.attr("id", "footer").text("Wrong!");
-                        }
-                        $("#quizField").append($newDiv);
-                        gameStart();
-                    });
+            let $selectionsDiv = $("<div>").attr("id", "selectButton");
+            for (let i = 0; i < theQuestion.choices.length; i++){
+                $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
             }
+            $("#quizField").append($selectionsDiv);
+
+            //reading user answer to the multiple choice
+            $("button").on('click', function(){     
+                questionNumber++;
+
+                if (questionNumber >= 2) {
+
+                    let $answerField = $("<div>");
+
+                    // Check answer
+                    let $selectedAnswer = $(this).text();      
+                    if($selectedAnswer === theQuestion.answer){
+                    $answerField.attr("id", "footer").text("Correct!");
+                    } 
+                    else {
+                        $answerField.attr("id", "footer").text("Wrong!");
+                    }
+                    $("#quizField").append($answerField);
+                    gameStart();
+                } 
+                else {
+
+                }
+
+
+
+            });
+            
         }
         else {
             allDone();
@@ -128,5 +137,19 @@ $(document).ready(function() {
     // This function executes when the quiz finished
     function allDone() {
 
+    }
+
+    function gameReset() {
+        $("#quizField").empty();   // clear the quiz field        
+    }
+
+    function clearScores() {
+        localStorage.removeItem("score");
+    }
+
+    function saveScore(str) {
+        localStorage.setItem(str, highScore);
+        highScore = 0;
+        questionNumber = 1;
     }
 });
