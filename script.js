@@ -48,7 +48,7 @@ var questions = [
 
 let secondsLeft = 15; //* questions.length;
 let highScore = 0;
-let questionNumber = 5;
+let questionNumber = 1;
 
 // Initialize local storage for the high score;
 localStorage.setItem("score", highScore);
@@ -59,7 +59,8 @@ $("#viewScore").on("click", function() {
 $(document).ready(function() {
     // This line of code will activate when a user click the Start Quiz button
     $("#startButton").on("click", function() {
-        $("#quizField").empty();
+        $("#quizField").empty();   // clear the quiz field
+
         startTimer();
         gameStart();
     });
@@ -67,32 +68,41 @@ $(document).ready(function() {
     
     // This function is to start the game.
     function gameStart() {
-        let theQuestion = questions[questionNumber-1];
+        $("#quizField").empty();   // clear the quiz field
+        if (questions.length != questionNumber-1) {
+            if (questionNumber-1 === 0) {
+                    let theQuestion = questions[questionNumber-1];
 
-        let $questionDiv = $("<h3>");
-        $questionDiv.text(questionNumber + ". " + theQuestion.title);
-        $("#quizField").append($questionDiv);
+                    let $questionDiv = $("<h3>");
+                    $questionDiv.text(questionNumber + ". " + theQuestion.title);
+                    $("#quizField").append($questionDiv);
 
-        let $selectionsDiv = $("<div>").attr("id", "selectButton");
-        for (let i = 0; i < theQuestion.choices.length; i++){
-            $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
-        }
-        $("#quizField").append($selectionsDiv);
+                    let $selectionsDiv = $("<div>").attr("id", "selectButton");
+                    for (let i = 0; i < theQuestion.choices.length; i++){
+                        $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
+                    }
+                    $("#quizField").append($selectionsDiv);
 
-        $("button").on('click', function(){     
-            questionNumber++;
-            let $newDiv = $("<div>");
+                    $("button").on('click', function(){     
+                        questionNumber++;
+                        let $newDiv = $("<div>");
 
-            // Check answer
-            let $selectedAnswer = $(this).text();      
-            if($selectedAnswer === theQuestion.answer){
-              $newDiv.attr("id", "footer").text("Correct!");
-            } 
-            else {
-                $newDiv.attr("id", "footer").text("Wrong!");
+                        // Check answer
+                        let $selectedAnswer = $(this).text();      
+                        if($selectedAnswer === theQuestion.answer){
+                        $newDiv.attr("id", "footer").text("Correct!");
+                        } 
+                        else {
+                            $newDiv.attr("id", "footer").text("Wrong!");
+                        }
+                        $("#quizField").append($newDiv);
+                        gameStart();
+                    });
             }
-            $("#quizField").append($newDiv);
-          });
+        }
+        else {
+            allDone();
+        }
     }
 
     // This function is for setting up the count down
@@ -115,5 +125,8 @@ $(document).ready(function() {
         startTimer();
     }
 
+    // This function executes when the quiz finished
+    function allDone() {
 
+    }
 });
