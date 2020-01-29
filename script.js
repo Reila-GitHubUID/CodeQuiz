@@ -46,12 +46,12 @@ var questions = [
 // "#counter"
 // "#quizField"
 
-let secondsLeft = 75; //* questions.length;
+let secondsLeft = 15 * questions.length;
 let highScore = 0;
 let questionNumber = 1;
 
 // Initialize local storage for the high score;
-localStorage.setItem("score", highScore);
+localStorage.setItem("score", 0);
 $("#viewScore").on("click", function() {
     alert ("Your current score is " + localStorage.getItem("score") + ".");
 });
@@ -67,8 +67,8 @@ $(document).ready(function() {
 
     
     // This function is to start the game.
+    let $answerField = $("<div>").addClass("answerField");
     function gameStart() {
-        let $answerField = $("<div>").addClass("answerField");
         $("#quizField").empty();   // clear the quiz field        
 
         if (questions.length >= questionNumber) {
@@ -89,12 +89,12 @@ $(document).ready(function() {
                 questionNumber++;
                 $(".answerField").empty();   // clear the answer field 
 
-                if (questionNumber <= questions.length) {
+                if (questionNumber <= questions.length+1) {
                     // Check answer    
                     let $selectedAnswer = $(this).text();      
                     if($selectedAnswer === theQuestion.answer){
                         $answerField.attr("id", "footer").text("The answer to the previous question is correct!");
-                        localStorage.setItem("score", highScore++);
+                        secondsLeft = secondsLeft+10;   // adding 10 seconds time
                         gameStart();
                     } 
                     else {
@@ -110,6 +110,7 @@ $(document).ready(function() {
                 }
                 else {
                     gameEnd();
+                    console.log("aaaaaaaaaa");
                 }
 
             });
@@ -118,6 +119,7 @@ $(document).ready(function() {
         }
         else {
             gameEnd();
+            console.log("bbbbbbbbb");
             $(".wrapperCenter").append($answerField);
         }
     }
@@ -144,17 +146,29 @@ $(document).ready(function() {
         else if (secondsLeft-10 <=0) {
             secondsLeft = 0;
             gameEnd();
+            console.log("ccccccc");
         }
 
     }
 
     // This function executes when the quiz finished
     function gameEnd() {
-        alert ("game over!");
+        highScore = 0;
+        questionNumber = 1;
+        $("h1").empty();
+        $("h1").text("All done!");
+
+        $("<div>").text("Your final score is " + secondsLeft);
+        $("#quizField").append("<p>");
+        $("<form>").text("Enter initials: ");
+        $("<form>").append($("<button>").text("Submit"));
+        $("#quizField").append("<form>");
     }
 
     function gameReset() {
-        $("#quizField").empty();   // clear the quiz field        
+        $("#quizField").empty();   // clear the quiz field 
+        highScore = 0;
+        questionNumber = 1;       
     }
 
     function clearScores() {
@@ -162,7 +176,7 @@ $(document).ready(function() {
     }
 
     function saveScore(str) {
-        localStorage.setItem(str, highScore);
+        localStorage.setItem(str, secondsLeft);
         highScore = 0;
         questionNumber = 1;
     }
