@@ -68,3 +68,7 @@ button:hover, #startButton:hover {
   justify-content: left;
   text-align: left;
 }
+
+#quizField {
+  text-align: left; 
+}

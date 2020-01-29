@@ -47,7 +47,7 @@ var questions = [
 // "#quizField"
 
 let secondsLeft = 15 * questions.length;
-let highScore = 0;
+
 let questionNumber = 1;
 let timerInterval = null;
 
@@ -60,7 +60,8 @@ $("#viewScore").on("click", function() {
 $(document).ready(function() {
     // This line of code will activate when a user click the Start Quiz button
     $("#startButton").on("click", function() {
-        $("#quizField").empty();   // clear the quiz field
+        $(".wrapperCenter").empty();   // clear the quiz field
+        $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
         timerInterval = setInterval(startTimer, 1000);
         gameStart();
 
@@ -126,8 +127,6 @@ $(document).ready(function() {
     }
 
     // This function is for setting up the count down
-    // function startTimer() {
-        
     function startTimer() {
         $("#counter").text(secondsLeft);
         secondsLeft--;
@@ -137,9 +136,7 @@ $(document).ready(function() {
             clearInterval(timerInterval);
         }
     }
-        
-        // , 1000);
-    // }
+       
 
     // This function will be triggered when a user answered wrong
     // The time left for the user will be deducted by 10 seconds
@@ -155,23 +152,21 @@ $(document).ready(function() {
 
     }
 
+    // This function will be triggered when the game is over
     function stopTimer() {
         clearInterval(timerInterval);
     }
 
     // This function executes when the quiz finished
     function gameEnd() {
-        highScore = 0;
-        questionNumber = 1;
         stopTimer();
 
-        $("#counter").empty();
         $("#counter").text(secondsLeft);
+        $(".wrapperCenter").append($("<h1>").text("All done!"));
 
-        $("h1").empty();
-        $("h1").text("All done!");
-
-        $("#quizField").append($("<div>").text("Your final score is " + secondsLeft));
+        let $quizField = $("#quizField");
+        $quizField.append($("<div>").text("Your final score is " + secondsLeft));
+        $(".wrapperCenter").append($quizField);
         
         $("<form>").text("Enter initials: ");
         $("<form>").append($("<button>").text("Submit"));
@@ -179,8 +174,7 @@ $(document).ready(function() {
     }
 
     function gameReset() {
-        $("#quizField").empty();   // clear the quiz field 
-        highScore = 0;
+        $("#quizField").empty();   // clear the quiz field
         questionNumber = 1;       
     }
 
@@ -190,7 +184,7 @@ $(document).ready(function() {
 
     function saveScore(str) {
         localStorage.setItem(str, secondsLeft);
-        highScore = 0;
+        
         questionNumber = 1;
     }
 });
