@@ -89,15 +89,16 @@ $(document).ready(function() {
                 questionNumber++;
                 $(".answerField").empty();   // clear the answer field 
 
-                if ((questionNumber >= 2) && (questionNumber <= questions.length)) {
+                if (questionNumber <= questions.length) {
                     // Check answer    
                     let $selectedAnswer = $(this).text();      
                     if($selectedAnswer === theQuestion.answer){
-                        $answerField.attr("id", "footer").text("Correct!");
+                        $answerField.attr("id", "footer").text("The answer to the previous question is correct!");
+                        localStorage.setItem("score", highScore++);
                         gameStart();
                     } 
                     else {
-                        $answerField.attr("id", "footer").text("Wrong!");
+                        $answerField.attr("id", "footer").text("The answer to the previous question is wrong!");
                         if (secondsLeft > 10) {
                             decrementTimer();
                             gameStart();
@@ -109,7 +110,6 @@ $(document).ready(function() {
                 }
                 else {
                     gameEnd();
-                    console.log("LLLLLLLL");
                 }
 
             });
