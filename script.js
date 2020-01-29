@@ -49,6 +49,7 @@ var questions = [
 let secondsLeft = 15 * questions.length;
 let highScore = 0;
 let questionNumber = 1;
+let timerInterval = null;
 
 // Initialize local storage for the high score;
 localStorage.setItem("score", 0);
@@ -60,7 +61,7 @@ $(document).ready(function() {
     // This line of code will activate when a user click the Start Quiz button
     $("#startButton").on("click", function() {
         $("#quizField").empty();   // clear the quiz field
-        startTimer();
+        timerInterval = setInterval(startTimer, 1000);
         gameStart();
 
     });
@@ -125,17 +126,20 @@ $(document).ready(function() {
     }
 
     // This function is for setting up the count down
+    // function startTimer() {
+        
     function startTimer() {
-        var timerInterval = setInterval(function() {
-            $("#counter").text(secondsLeft);
-            secondsLeft--;
+        $("#counter").text(secondsLeft);
+        secondsLeft--;
 
-            // this is to stop the function from looping and start over
-            if(secondsLeft === -1) {
-                clearInterval(timerInterval);
-            }
-        }, 1000);
+        // this is to stop the function from looping and start over
+        if(secondsLeft === -1) {
+            clearInterval(timerInterval);
+        }
     }
+        
+        // , 1000);
+    // }
 
     // This function will be triggered when a user answered wrong
     // The time left for the user will be deducted by 10 seconds
@@ -151,15 +155,24 @@ $(document).ready(function() {
 
     }
 
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+
     // This function executes when the quiz finished
     function gameEnd() {
         highScore = 0;
         questionNumber = 1;
+        stopTimer();
+
+        $("#counter").empty();
+        $("#counter").text(secondsLeft);
+
         $("h1").empty();
         $("h1").text("All done!");
 
-        $("<div>").text("Your final score is " + secondsLeft);
-        $("#quizField").append("<p>");
+        $("#quizField").append($("<div>").text("Your final score is " + secondsLeft));
+        
         $("<form>").text("Enter initials: ");
         $("<form>").append($("<button>").text("Submit"));
         $("#quizField").append("<form>");
