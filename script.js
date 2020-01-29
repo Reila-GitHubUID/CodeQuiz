@@ -122,7 +122,6 @@ $(document).ready(function() {
         else {
             gameEnd();
             console.log("bbbbbbbbb");
-            $(".wrapperCenter").append($answerField);
         }
     }
 
@@ -161,16 +160,23 @@ $(document).ready(function() {
     function gameEnd() {
         stopTimer();
 
-        $("#counter").text(secondsLeft);
-        $(".wrapperCenter").append($("<h1>").text("All done!"));
-
         let $quizField = $("#quizField");
-        $quizField.append($("<div>").text("Your final score is " + secondsLeft));
-        $(".wrapperCenter").append($quizField);
+        let $wrapperCenter = $(".wrapperCenter");
+        let $form = $("<form>");
+
+        $("#counter").text(secondsLeft);
+        $wrapperCenter.append($("<h1>").text("All done!")); // Display "All done! text" line
+
+        $quizField.append($("<div>").text("Your final score is " + secondsLeft));   // Display user's final score line
+        $wrapperCenter.append($quizField);
         
-        $("<form>").text("Enter initials: ");
-        $("<form>").append($("<button>").text("Submit"));
-        $("#quizField").append("<form>");
+        $quizField.append($form.text("Enter initials: "));   // Display "Enter initials" line
+        $form.append($("<input>"));
+        $form.append($("<button>").text("Submit"));
+        $quizField.append($form);
+        $quizField.append($("<p>"));
+        
+        $wrapperCenter.append($answerField);
     }
 
     function gameReset() {
