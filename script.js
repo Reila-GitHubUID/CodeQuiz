@@ -172,11 +172,21 @@ $(document).ready(function() {
         
         $quizField.append($form.text("Enter initials: "));   // Display "Enter initials" line
         $form.append($("<input>"));
-        $form.append($("<button>").text("Submit"));
+        $form.append($("<button>").attr("id", "initialButton").text("Submit"));
         $quizField.append($form);
         $quizField.append($("<p>"));
         
         $wrapperCenter.append($answerField);
+
+        $("#initialButton").on("click", function() {
+            // $(".wrapperCenter").empty();   // clear the quiz field
+            // $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
+            let $input = $("input");
+
+            if ($input === NaN)
+                saveScore($input);
+    
+        });
     }
 
     function gameReset() {
@@ -185,12 +195,11 @@ $(document).ready(function() {
     }
 
     function clearScores() {
-        localStorage.removeItem("score");
+        // localStorage.removeItem();
     }
 
     function saveScore(str) {
-        localStorage.setItem(str, secondsLeft);
-        
+        localStorage.setItem(str, secondsLeft);        
         questionNumber = 1;
     }
 });
