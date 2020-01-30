@@ -30,7 +30,7 @@ body {
   padding-right: 50px ;
 }
 
-button, #startButton {
+button, #submitButton, #startButton {
   background-color: rgb(90, 26, 192);
   border-radius: 4px;
   border-style: none;
@@ -47,7 +47,7 @@ button, #startButton {
   width: auto;
 }
 
-button:hover, #startButton:hover {
+button, #submitButton:hover, #startButton:hover {
   background-color: rgba(102, 28, 221, 0.918);
 }
 

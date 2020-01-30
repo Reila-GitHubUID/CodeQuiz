@@ -170,21 +170,32 @@ $(document).ready(function() {
         $quizField.append($("<div>").text("Your final score is " + secondsLeft));   // Display user's final score line
         $wrapperCenter.append($quizField);
         
+        // $quizField.append($form.text("Enter initials: "));   // Display "Enter initials" line
+        // $form.append($("<input>"));
+        // $form.append($("<button>").attr("id", "submitButton").text("Submit"));
+        // $quizField.append($form);
+        // $quizField.append($("<p>"));        
+        // $wrapperCenter.append($answerField);
+
         $quizField.append($form.text("Enter initials: "));   // Display "Enter initials" line
-        $form.append($("<input>"));
-        $form.append($("<button>").attr("id", "initialButton").text("Submit"));
+        $form.append($("<input>").attr("type", "text"));
+        $form.append($("<input>").attr("type", "Submit").attr("value", "Submit").attr("id", "submitButton"));
         $quizField.append($form);
-        $quizField.append($("<p>"));
-        
+        $quizField.append($("<p>"));        
         $wrapperCenter.append($answerField);
 
-        $("#initialButton").on("click", function() {
-            // $(".wrapperCenter").empty();   // clear the quiz field
-            // $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
+        // click to action line
+        $("#submitButton").on("submit", function() {
             let $input = $("input");
+            console.log("$input is " + $input);
 
-            if ($input === NaN)
+            if ($input === "") {
                 saveScore($input);
+                console.log("$input is empty");
+            }
+            else {
+                console.log("$input is " + $input);
+            }
     
         });
     }
@@ -195,11 +206,7 @@ $(document).ready(function() {
     }
 
     function clearScores() {
-        // localStorage.removeItem();
+        localStorage.removeItem();
     }
 
-    function saveScore(str) {
-        localStorage.setItem(str, secondsLeft);        
-        questionNumber = 1;
-    }
 });
