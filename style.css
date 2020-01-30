@@ -54,8 +54,6 @@ button, #submitButton:hover, #startButton:hover {
 #selectButton {
   display: flex;
   flex-direction: column; 
-  /* width: fit-content; */
-  /* vertical-align: right; */
 }
 
 #footer {
