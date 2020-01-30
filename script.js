@@ -120,12 +120,18 @@ $(document).ready(function () {
                             }
                             else {
                                 gameEnd();
-                                        $(".wrapperCenter").append($answerField);
+                            }
+
+                        });
+                        $(".wrapperCenter").append($answerField);
             }
         }
         else {
             gameEnd();
-            is function is for setting up the count down
+        }
+    }
+
+    // This function is for setting up the count down
     function startTimer() {
         $("#counter").text(secondsLeft);
         secondsLeft--;
@@ -146,7 +152,11 @@ $(document).ready(function () {
         else if (secondsLeft - 10 <= 0) {
             secondsLeft = 0;
             gameEnd();
-            ction will be triggered when the game is over
+        }
+
+    }
+
+    // This function will be triggered when the game is over
     function stopTimer() {
         clearInterval(timerInterval);
     }
@@ -183,7 +193,6 @@ $(document).ready(function () {
             }
             else {
                 let arr = [$input, secondsLeft];
-                unt);
                 storeScores(arr);
                 showScores();
                 showScoresAfterGame();
