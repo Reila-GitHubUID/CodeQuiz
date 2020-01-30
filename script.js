@@ -51,8 +51,15 @@ $(document).ready(function () {
     $("#viewScore").on("click", function () {
         if (localStorageCount <= 1)
             alert("You are the first recorded player.\n There is no scores to display");
-        else
-            showScores();
+        else {
+            showScores();            
+            let $button1 = $("<button>").attr("id", "goBack").text("Go Back");
+            $("#quizField").append($button1);
+
+            $("#goBack").on("click", function() {
+                window.history.back();
+            });
+        }
     });
 
     // This line of code will activate when a user click the Start Quiz button
@@ -187,6 +194,7 @@ $(document).ready(function () {
                 let arr = [$input, secondsLeft];
                 storeScores(arr);
                 showScores();
+                showScoresAfterGame();
             }
 
         });
@@ -225,7 +233,9 @@ $(document).ready(function () {
             $newDiv.append($("<p>").text(i + ". " + $array[0] + " - " + $array[1]));
         }
         $("#quizField").append($newDiv);
+    }
 
+    function showScoresAfterGame() {
         // display button options
         let $button1 = $("<button>").attr("id", "playAgain").text("Play Again");
         let $button2 = null;
@@ -238,11 +248,14 @@ $(document).ready(function () {
             $("#quizField").append($button2).append($button1);
         }
 
+        $("#playAgain").on("click", function () {            
+        gameStart();            
+        });
 
         $("#clearScores").on("click", function () {            
             clearScores();
-            showScores();            
-            // $("#quizField").append($("<p>").text("Nothing to display"));
+            showScores();
+            showScoresAfterGame();            
         });
 
 
