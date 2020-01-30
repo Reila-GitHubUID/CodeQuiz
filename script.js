@@ -57,7 +57,7 @@ $(document).ready(function () {
             $("#quizField").append($button1);
 
             $("#goBack").on("click", function() {
-                window.history.back();
+                gameStart();
             });
         }
     });
@@ -75,61 +75,57 @@ $(document).ready(function () {
     // This function is to start the game.
     let $answerField = $("<div>").addClass("answerField");
     function gameStart() {
-        $("#quizField").empty();   // clear the quiz field        
+        $("#quizField").empty();   // clear the quiz field   
+
+        if ($(".wrapperLeft").text() === "")
+            $(".wrapperLeft").text("View Highscores");
 
         if (questions.length >= questionNumber) {
-            let theQuestion = questions[questionNumber - 1];
+            if (questionNumber >= 1) {       
+                        let theQuestion = questions[questionNumber - 1];
 
-            let $questionDiv = $("<h3>");
-            $questionDiv.text(questionNumber + ". " + theQuestion.title);
-            $("#quizField").append($questionDiv);
+                        let $questionDiv = $("<h3>");
+                        $questionDiv.text(questionNumber + ". " + theQuestion.title);
+                        $("#quizField").append($questionDiv);
 
-            let $selectionsDiv = $("<div>").attr("id", "selectButton");
-            for (let i = 0; i < theQuestion.choices.length; i++) {
-                $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
+                        let $selectionsDiv = $("<div>").attr("id", "selectButton");
+                        for (let i = 0; i < theQuestion.choices.length; i++) {
+                            $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
+                        }
+                        $("#quizField").append($selectionsDiv);
+
+                        // checkAnswer();            
+                        $("button").on('click', function () {
+                            questionNumber++;
+                            $(".answerField").empty();   // clear the answer field 
+
+                            if (questionNumber <= questions.length + 1) {
+                                // Check answer    
+                                let $selectedAnswer = $(this).text();
+                                if ($selectedAnswer === theQuestion.answer) {
+                                    $answerField.attr("id", "footer").text("Correct!").show().fadeOut(2000);
+                                    secondsLeft = secondsLeft + 10;   // adding 10 seconds time
+                                    gameStart();
+                                }
+                                else {
+                                    $answerField.attr("id", "footer").text("Wrong!").show().fadeOut(2000);
+                                    if (secondsLeft > 10) {
+                                        decrementTimer();
+                                        gameStart();
+                                    }
+                                    else {
+                                        decrementTimer();
+                                    }
+                                }
+                            }
+                            else {
+                                gameEnd();
+                                        $(".wrapperCenter").append($answerField);
             }
-            $("#quizField").append($selectionsDiv);
-
-            // checkAnswer();            
-            $("button").on('click', function () {
-                questionNumber++;
-                $(".answerField").empty();   // clear the answer field 
-
-                if (questionNumber <= questions.length + 1) {
-                    // Check answer    
-                    let $selectedAnswer = $(this).text();
-                    if ($selectedAnswer === theQuestion.answer) {
-                        $answerField.attr("id", "footer").text("Correct!").show().fadeOut(2000);
-                        secondsLeft = secondsLeft + 10;   // adding 10 seconds time
-                        gameStart();
-                    }
-                    else {
-                        $answerField.attr("id", "footer").text("Wrong!").show().fadeOut(2000);
-                        if (secondsLeft > 10) {
-                            decrementTimer();
-                            gameStart();
-                        }
-                        else {
-                            decrementTimer();
-                        }
-                    }
-                }
-                else {
-                    gameEnd();
-                    console.log("aaaaaaaaaa");
-                }
-
-            });
-            $(".wrapperCenter").append($answerField);
-
         }
         else {
             gameEnd();
-            console.log("bbbbbbbbb");
-        }
-    }
-
-    // This function is for setting up the count down
+            is function is for setting up the count down
     function startTimer() {
         $("#counter").text(secondsLeft);
         secondsLeft--;
@@ -150,12 +146,7 @@ $(document).ready(function () {
         else if (secondsLeft - 10 <= 0) {
             secondsLeft = 0;
             gameEnd();
-            console.log("ccccccc");
-        }
-
-    }
-
-    // This function will be triggered when the game is over
+            ction will be triggered when the game is over
     function stopTimer() {
         clearInterval(timerInterval);
     }
@@ -192,7 +183,7 @@ $(document).ready(function () {
             }
             else {
                 let arr = [$input, secondsLeft];
-                console.log("localStorageCount = " + localStorageCount);
+                unt);
                 storeScores(arr);
                 showScores();
                 showScoresAfterGame();
@@ -212,13 +203,13 @@ $(document).ready(function () {
         localStorageCount = 0;
     }
 
-    // This function will:
+    // *************** This function will:
     // 1. sort scores from highest to the lowest
     // 2. store in localStorage
     function storeScores(arr) {
-        if (localStorageCount > 1)
-            localStorage.clear();
-        else
+        // if (localStorageCount > 1)
+        //     localStorage.clear();
+        // else
             localStorage.setItem(localStorageCount, JSON.stringify(arr));
     }
 
@@ -233,7 +224,6 @@ $(document).ready(function () {
         let $newDiv = $("<div>");
         for (let i = 1; i <= localStorage.length; i++) {
             let $array = JSON.parse(localStorage.getItem(i));
-            console.log(i + ". " + $array[0] + " - " + $array[1]);
             $newDiv.append($("<p>").text(i + ". " + $array[0] + " - " + $array[1]));
         }
         $("#quizField").append($newDiv);
@@ -253,12 +243,14 @@ $(document).ready(function () {
         }
 
         $("#playAgain").on("click", function () {    
-            secondsLeft = 15 * questions.length;   // reset the countdown     
-            gameStart();            
-            $answerField = $("<div>").addClass("answerField"); 
-            $(".wrapperCenter").empty();   // clear the quiz field
+            secondsLeft = 15 * questions.length;   // reset the countdown    
+            questionNumber = 1; 
+            localStorageCount++;
+            timerInterval = setInterval(startTimer, 1000);
+            
+            $(".wrapperCenter").empty();
             $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
-            timerInterval = setInterval(startTimer, 1000);    
+            gameStart();
         });
 
         $("#clearScores").on("click", function () {            
