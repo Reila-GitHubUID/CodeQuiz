@@ -1,62 +1,62 @@
 var questions = [
     {
-      title: "Commonly used data types DO NOT include:",
-      choices: ["strings", "booleans", "alerts", "numbers"],
-      answer: "alerts"
+        title: "Commonly used data types DO NOT include:",
+        choices: ["strings", "booleans", "alerts", "numbers"],
+        answer: "alerts"
     },
     {
-      title: "The condition in an if / else statement is enclosed within ____.",
-      choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-      answer: "parentheses"
+        title: "The condition in an if / else statement is enclosed within ____.",
+        choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
+        answer: "parentheses"
     },
     {
-      title: "Arrays in JavaScript can be used to store ____.",
-      choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-      answer: "all of the above"
+        title: "Arrays in JavaScript can be used to store ____.",
+        choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+        answer: "all of the above"
     },
     {
-      title: "String values must be enclosed within ____ when being assigned to variables.",
-      choices: ["commas", "curly brackets", "quotes", "parantheses"],
-      answer: "quotes"
+        title: "String values must be enclosed within ____ when being assigned to variables.",
+        choices: ["commas", "curly brackets", "quotes", "parantheses"],
+        answer: "quotes"
     },
     {
-      title: "A very useful tool used during development and debuging for printing content to the debugger is:",
-      choices: ["JavaScript", "terminal / bash", "for loops", "console.log"],
-      answer: "console.log"
+        title: "A very useful tool used during development and debuging for printing content to the debugger is:",
+        choices: ["JavaScript", "terminal / bash", "for loops", "console.log"],
+        answer: "console.log"
     },
     {
-      title: "Which of the following is NOT a javascript data type?",
-      choices: ["Array", "Object", "Table", "String"],
-      answer: "Table"
+        title: "Which of the following is NOT a javascript data type?",
+        choices: ["Array", "Object", "Table", "String"],
+        answer: "Table"
     },
     {
-      title: "Which parenthesis type is used to invoke functions?",
-      choices: ["{}", "[]", "||", "()"],
-      answer: "()"
+        title: "Which parenthesis type is used to invoke functions?",
+        choices: ["{}", "[]", "||", "()"],
+        answer: "()"
     },
     {
-      title: "What will this statement return: console.log('7' == 7)",
-      choices: ["true", "false", "maybe", "depends"],
-      answer: "true"
+        title: "What will this statement return: console.log('7' == 7)",
+        choices: ["true", "false", "maybe", "depends"],
+        answer: "true"
     }
-  ];
+];
 
 let secondsLeft = 15 * questions.length;
 let questionNumber = 1;
 let timerInterval = null;
 let localStorageCount = 0;      // Initialize local storage for the high score;
 
-$(document).ready(function() {
-    
-    $("#viewScore").on("click", function() {
-        if (localStorageCount <=1)
+$(document).ready(function () {
+
+    $("#viewScore").on("click", function () {
+        if (localStorageCount <= 1)
             alert("You are the first recorded player.\n There is no scores to display");
-        else 
+        else
             showScores();
     });
 
     // This line of code will activate when a user click the Start Quiz button
-    $("#startButton").on("click", function() {
+    $("#startButton").on("click", function () {
         $(".wrapperCenter").empty();   // clear the quiz field
         $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
         timerInterval = setInterval(startTimer, 1000);
@@ -64,38 +64,38 @@ $(document).ready(function() {
         gameStart();
     });
 
-    
+
     // This function is to start the game.
     let $answerField = $("<div>").addClass("answerField");
     function gameStart() {
         $("#quizField").empty();   // clear the quiz field        
 
         if (questions.length >= questionNumber) {
-            let theQuestion = questions[questionNumber-1];
+            let theQuestion = questions[questionNumber - 1];
 
             let $questionDiv = $("<h3>");
             $questionDiv.text(questionNumber + ". " + theQuestion.title);
             $("#quizField").append($questionDiv);
 
             let $selectionsDiv = $("<div>").attr("id", "selectButton");
-            for (let i = 0; i < theQuestion.choices.length; i++){
+            for (let i = 0; i < theQuestion.choices.length; i++) {
                 $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
             }
             $("#quizField").append($selectionsDiv);
-            
+
             // checkAnswer();            
-            $("button").on('click', function(){     
+            $("button").on('click', function () {
                 questionNumber++;
                 $(".answerField").empty();   // clear the answer field 
 
-                if (questionNumber <= questions.length+1) {
+                if (questionNumber <= questions.length + 1) {
                     // Check answer    
-                    let $selectedAnswer = $(this).text();      
-                    if($selectedAnswer === theQuestion.answer){
+                    let $selectedAnswer = $(this).text();
+                    if ($selectedAnswer === theQuestion.answer) {
                         $answerField.attr("id", "footer").text("Correct!").show().fadeOut(2000);
-                        secondsLeft = secondsLeft+10;   // adding 10 seconds time
+                        secondsLeft = secondsLeft + 10;   // adding 10 seconds time
                         gameStart();
-                    } 
+                    }
                     else {
                         $answerField.attr("id", "footer").text("Wrong!").show().fadeOut(2000);
                         if (secondsLeft > 10) {
@@ -114,7 +114,7 @@ $(document).ready(function() {
 
             });
             $(".wrapperCenter").append($answerField);
-    
+
         }
         else {
             gameEnd();
@@ -128,19 +128,19 @@ $(document).ready(function() {
         secondsLeft--;
 
         // this is to stop the function from looping and start over
-        if(secondsLeft === -1) {
+        if (secondsLeft === -1) {
             clearInterval(timerInterval);
         }
     }
-       
+
 
     // This function will be triggered when a user answered wrong
     // The time left for the user will be deducted by 10 seconds
     function decrementTimer() {
-        if (secondsLeft-10 > 0) {
-            secondsLeft = secondsLeft-10;
+        if (secondsLeft - 10 > 0) {
+            secondsLeft = secondsLeft - 10;
         }
-        else if (secondsLeft-10 <=0) {
+        else if (secondsLeft - 10 <= 0) {
             secondsLeft = 0;
             gameEnd();
             console.log("ccccccc");
@@ -171,11 +171,11 @@ $(document).ready(function() {
         $form.append($("<input>").attr("type", "text"));
         $form.append($("<input>").attr("type", "Submit").attr("value", "Submit").attr("id", "submitButton"));
         $quizField.append($form);
-        $quizField.append($("<p>"));        
+        $quizField.append($("<p>"));
         $wrapperCenter.append($answerField);
 
         // click to action line
-        $form.submit(function(e) {
+        $form.submit(function (e) {
             e.preventDefault();
 
             let $input = $("input").first().val();
@@ -188,13 +188,13 @@ $(document).ready(function() {
                 storeScores(arr);
                 showScores();
             }
-    
+
         });
     }
 
     function gameReset() {
         $("#quizField").empty();   // clear the quiz field
-        questionNumber = 1;   
+        questionNumber = 1;
         localStorageCount++;
     }
 
@@ -206,13 +206,13 @@ $(document).ready(function() {
     // This function will:
     // 1. sort scores from highest to the lowest
     // 2. store in localStorage
-    function storeScores(arr) {        
-        localStorage.setItem (localStorageCount, JSON.stringify(arr));
+    function storeScores(arr) {
+        localStorage.setItem(localStorageCount, JSON.stringify(arr));
     }
 
     function showScores() {
         $("#quizField").empty();   // clear the quiz field 
-        $("#viewScore").empty();       
+        $("#viewScore").empty();
 
         let $h3 = $("<h3>");
         $h3.text("Highscores");
@@ -231,7 +231,7 @@ $(document).ready(function() {
         let $button2 = $("<button>").attr("id", "clearScores").text("Clear Highscores");
         $("#quizField").append($button1).append($button2);
 
-        
+
     }
 
 });
