@@ -199,7 +199,7 @@ $(document).ready(function () {
     }
 
     function clearScores() {
-        localStorage.removeItem();
+        localStorage.clear();
         localStorageCount = 0;
     }
 
@@ -228,8 +228,22 @@ $(document).ready(function () {
 
         // display button options
         let $button1 = $("<button>").attr("id", "playAgain").text("Play Again");
-        let $button2 = $("<button>").attr("id", "clearScores").text("Clear Highscores");
-        $("#quizField").append($button1).append($button2);
+        let $button2 = null;
+        if (localStorage.length>0) {
+            $button2 = $("<button>").attr("id", "clearScores").text("Clear Highscores");
+            $("#quizField").append($button1).append($button2);
+        }
+        else {
+            $button2 = $("<p>").text("Nothing to display");
+            $("#quizField").append($button2).append($button1);
+        }
+
+
+        $("#clearScores").on("click", function () {            
+            clearScores();
+            showScores();            
+            // $("#quizField").append($("<p>").text("Nothing to display"));
+        });
 
 
     }
