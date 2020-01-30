@@ -44,20 +44,23 @@ var questions = [
 let secondsLeft = 15 * questions.length;
 let questionNumber = 1;
 let timerInterval = null;
-
-// Initialize local storage for the high score;
-let localStorageCount = 0;
-$("#viewScore").on("click", function() {
-    showScores();
-});
+let localStorageCount = 0;      // Initialize local storage for the high score;
 
 $(document).ready(function() {
+    
+    $("#viewScore").on("click", function() {
+        if (localStorageCount <=1)
+            alert("You are the first recorded player.\n There is no scores to display");
+        else 
+            showScores();
+    });
+
     // This line of code will activate when a user click the Start Quiz button
     $("#startButton").on("click", function() {
         $(".wrapperCenter").empty();   // clear the quiz field
         $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
         timerInterval = setInterval(startTimer, 1000);
-        localStorageCount = 1;
+        localStorageCount++;
         gameStart();
     });
 
@@ -208,7 +211,8 @@ $(document).ready(function() {
     }
 
     function showScores() {
-        $("#quizField").empty();   // clear the quiz field        
+        $("#quizField").empty();   // clear the quiz field 
+        $("#viewScore").empty();       
 
         let $h3 = $("<h3>");
         $h3.text("Highscores");
@@ -221,6 +225,11 @@ $(document).ready(function() {
             $newDiv.append($("<p>").text(i + ". " + $array[0] + " - " + $array[1]));
         }
         $("#quizField").append($newDiv);
+
+        // display button options
+        let $button1 = $("<button>").attr("id", "playAgain").text("Play Again");
+        let $button2 = $("<button>").attr("id", "clearScores").text("Clear Highscores");
+        $("#quizField").append($button1).append($button2);
 
         
     }
