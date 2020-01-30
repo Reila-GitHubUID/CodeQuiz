@@ -47,12 +47,11 @@ var questions = [
 // "#quizField"
 
 let secondsLeft = 15 * questions.length;
-
 let questionNumber = 1;
 let timerInterval = null;
 
 // Initialize local storage for the high score;
-localStorage.setItem("score", 0);
+let localStorageCount = 1;
 $("#viewScore").on("click", function() {
     alert ("Your current score is " + localStorage.getItem("score") + ".");
 });
@@ -95,12 +94,12 @@ $(document).ready(function() {
                     // Check answer    
                     let $selectedAnswer = $(this).text();      
                     if($selectedAnswer === theQuestion.answer){
-                        $answerField.attr("id", "footer").text("The answer to the previous question is correct!");
+                        $answerField.attr("id", "footer").text("Correct!").show().fadeOut(2000);
                         secondsLeft = secondsLeft+10;   // adding 10 seconds time
                         gameStart();
                     } 
                     else {
-                        $answerField.attr("id", "footer").text("The answer to the previous question is wrong!");
+                        $answerField.attr("id", "footer").text("Wrong!").show().fadeOut(2000);
                         if (secondsLeft > 10) {
                             decrementTimer();
                             gameStart();
@@ -169,13 +168,6 @@ $(document).ready(function() {
 
         $quizField.append($("<div>").text("Your final score is " + secondsLeft));   // Display user's final score line
         $wrapperCenter.append($quizField);
-        
-        // $quizField.append($form.text("Enter initials: "));   // Display "Enter initials" line
-        // $form.append($("<input>"));
-        // $form.append($("<button>").attr("id", "submitButton").text("Submit"));
-        // $quizField.append($form);
-        // $quizField.append($("<p>"));        
-        // $wrapperCenter.append($answerField);
 
         $quizField.append($form.text("Enter initials: "));   // Display "Enter initials" line
         $form.append($("<input>").attr("type", "text"));
@@ -185,16 +177,18 @@ $(document).ready(function() {
         $wrapperCenter.append($answerField);
 
         // click to action line
-        $("#submitButton").on("submit", function() {
-            let $input = $("input");
-            console.log("$input is " + $input);
+        $form.submit(function(e) {
+            e.preventDefault();
+
+            let $input = $("input").first().val();
 
             if ($input === "") {
-                saveScore($input);
-                console.log("$input is empty");
+                $answerField.attr("id", "footer").text("Please reenter your initials!").show().fadeOut(4000);
             }
             else {
-                console.log("$input is " + $input);
+                let arr = [$input, secondsLeft];
+                localStorage.setItem (localStorageCount, JSON.stringify(arr));
+                localStorageCount++;
             }
     
         });
