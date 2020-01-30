@@ -41,19 +41,14 @@ var questions = [
     }
   ];
 
-// "#viewScore"
-// "#startButton"
-// "#counter"
-// "#quizField"
-
 let secondsLeft = 15 * questions.length;
 let questionNumber = 1;
 let timerInterval = null;
 
 // Initialize local storage for the high score;
-let localStorageCount = 1;
+let localStorageCount = 0;
 $("#viewScore").on("click", function() {
-    alert ("Your current score is " + localStorage.getItem("score") + ".");
+    showScores();
 });
 
 $(document).ready(function() {
@@ -62,8 +57,8 @@ $(document).ready(function() {
         $(".wrapperCenter").empty();   // clear the quiz field
         $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
         timerInterval = setInterval(startTimer, 1000);
+        localStorageCount = 1;
         gameStart();
-
     });
 
     
@@ -187,8 +182,8 @@ $(document).ready(function() {
             }
             else {
                 let arr = [$input, secondsLeft];
-                localStorage.setItem (localStorageCount, JSON.stringify(arr));
-                localStorageCount++;
+                storeScores(arr);
+                showScores();
             }
     
         });
@@ -196,11 +191,38 @@ $(document).ready(function() {
 
     function gameReset() {
         $("#quizField").empty();   // clear the quiz field
-        questionNumber = 1;       
+        questionNumber = 1;   
+        localStorageCount++;
     }
 
     function clearScores() {
         localStorage.removeItem();
+        localStorageCount = 0;
+    }
+
+    // This function will:
+    // 1. sort scores from highest to the lowest
+    // 2. store in localStorage
+    function storeScores(arr) {        
+        localStorage.setItem (localStorageCount, JSON.stringify(arr));
+    }
+
+    function showScores() {
+        $("#quizField").empty();   // clear the quiz field        
+
+        let $h3 = $("<h3>");
+        $h3.text("Highscores");
+        $("#quizField").append($h3);
+
+        let $newDiv = $("<div>");
+        for (let i = 1; i <= localStorage.length; i++) {
+            let $array = JSON.parse(localStorage.getItem(i));
+            console.log(i + ". " + $array[0] + " - " + $array[1]);
+            $newDiv.append($("<p>").text(i + ". " + $array[0] + " - " + $array[1]));
+        }
+        $("#quizField").append($newDiv);
+
+        
     }
 
 });
