@@ -82,48 +82,48 @@ $(document).ready(function () {
 
         if (questions.length >= questionNumber) {
             if (questionNumber >= 1) {       
-                        let theQuestion = questions[questionNumber - 1];
+                let theQuestion = questions[questionNumber - 1];
 
-                        let $questionDiv = $("<h3>");
-                        $questionDiv.text(questionNumber + ". " + theQuestion.title);
-                        $("#quizField").append($questionDiv);
+                let $questionDiv = $("<h3>");
+                $questionDiv.text(questionNumber + ". " + theQuestion.title);
+                $("#quizField").append($questionDiv);
 
-                        let $selectionsDiv = $("<div>").attr("id", "selectButton");
-                        for (let i = 0; i < theQuestion.choices.length; i++) {
-                            $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
+                let $selectionsDiv = $("<div>").attr("id", "selectButton");
+                for (let i = 0; i < theQuestion.choices.length; i++) {
+                    $selectionsDiv.append($("<button>").text(theQuestion.choices[i]));
+                }
+                $("#quizField").append($selectionsDiv);
+
+                // checkAnswer();            
+                $("button").on('click', function () {
+                    questionNumber++;
+                    $(".answerField").empty();   // clear the answer field 
+
+                    if (questionNumber <= questions.length + 1) {
+                        // Check answer    
+                        let $selectedAnswer = $(this).text();
+                        if ($selectedAnswer === theQuestion.answer) {
+                            $answerField.attr("id", "footer").text("Correct!").show().fadeOut(2000);
+                            secondsLeft = secondsLeft + 10;   // adding 10 seconds time
+                            gameStart();
                         }
-                        $("#quizField").append($selectionsDiv);
-
-                        // checkAnswer();            
-                        $("button").on('click', function () {
-                            questionNumber++;
-                            $(".answerField").empty();   // clear the answer field 
-
-                            if (questionNumber <= questions.length + 1) {
-                                // Check answer    
-                                let $selectedAnswer = $(this).text();
-                                if ($selectedAnswer === theQuestion.answer) {
-                                    $answerField.attr("id", "footer").text("Correct!").show().fadeOut(2000);
-                                    secondsLeft = secondsLeft + 10;   // adding 10 seconds time
-                                    gameStart();
-                                }
-                                else {
-                                    $answerField.attr("id", "footer").text("Wrong!").show().fadeOut(2000);
-                                    if (secondsLeft > 10) {
-                                        decrementTimer();
-                                        gameStart();
-                                    }
-                                    else {
-                                        decrementTimer();
-                                    }
-                                }
+                        else {
+                            $answerField.attr("id", "footer").text("Wrong!").show().fadeOut(2000);
+                            if (secondsLeft > 10) {
+                                decrementTimer();
+                                gameStart();
                             }
                             else {
-                                gameEnd();
+                                decrementTimer();
                             }
+                        }
+                    }
+                    else {
+                        gameEnd();
+                    }
 
-                        });
-                        $(".wrapperCenter").append($answerField);
+                });
+                $(".wrapperCenter").append($answerField);
             }
         }
         else {
@@ -199,12 +199,6 @@ $(document).ready(function () {
             }
 
         });
-    }
-
-    function gameReset() {
-        $("#quizField").empty();   // clear the quiz field
-        questionNumber = 1;
-        localStorageCount++;
     }
 
     function clearScores() {
