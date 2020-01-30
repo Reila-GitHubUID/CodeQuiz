@@ -192,6 +192,7 @@ $(document).ready(function () {
             }
             else {
                 let arr = [$input, secondsLeft];
+                console.log("localStorageCount = " + localStorageCount);
                 storeScores(arr);
                 showScores();
                 showScoresAfterGame();
@@ -215,7 +216,10 @@ $(document).ready(function () {
     // 1. sort scores from highest to the lowest
     // 2. store in localStorage
     function storeScores(arr) {
-        localStorage.setItem(localStorageCount, JSON.stringify(arr));
+        if (localStorageCount > 1)
+            localStorage.clear();
+        else
+            localStorage.setItem(localStorageCount, JSON.stringify(arr));
     }
 
     function showScores() {
@@ -248,7 +252,8 @@ $(document).ready(function () {
             $("#quizField").append($button2).append($button1);
         }
 
-        $("#playAgain").on("click", function () {            
+        $("#playAgain").on("click", function () {    
+            secondsLeft = 15 * questions.length;   // reset the countdown     
             gameStart();            
             $answerField = $("<div>").addClass("answerField"); 
             $(".wrapperCenter").empty();   // clear the quiz field
