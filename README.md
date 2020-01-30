@@ -14,11 +14,13 @@ This is a timed quiz on JavaScript fundamentals that stores high scores, so that
 
   * Score is calculated by time remaining. Answering quickly and correctly results in a higher score. Answering incorrectly results in a time penalty (in this case, 10 seconds are subtracted from time remaining). Similarly, answering correctly results in an extra 10 seconds time.
 
-  * When time runs out and/or all questions are answered, the user is presented with their final score and asked to enter their initials. 
+  * When time runs out and/or all questions are answered, the user is directed to a page where they are presented with their final score and asked to enter their initials. 
+
+  * Once the initial has been entered, the user will be directed to the "View Highscores" page. In this page, the user can clear the highscore or play the game again. Notice, the top left corner of the page doesn't have the "View Highscores" text. It is disabled because the user is currently on the page.
 
 * You will be able to check other player's score by clicking "View Highscores" at anytime. Important: if you do check the highscore during a quiz time, your timer will not pause.
 
-* You have the ability to clear the highscore.
+* If you decide to check scores during the quiz time, you will see there is only 1 button presented, which is a "Go Back" button, which will direct you back to your last quiz question.
 
 ## Tests
 
