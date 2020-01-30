@@ -249,7 +249,11 @@ $(document).ready(function () {
         }
 
         $("#playAgain").on("click", function () {            
-        gameStart();            
+            gameStart();            
+            $answerField = $("<div>").addClass("answerField"); 
+            $(".wrapperCenter").empty();   // clear the quiz field
+            $(".wrapperCenter").append($("<div>").attr("id", "quizField"));
+            timerInterval = setInterval(startTimer, 1000);    
         });
 
         $("#clearScores").on("click", function () {            
