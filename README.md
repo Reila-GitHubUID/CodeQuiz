@@ -22,7 +22,7 @@ This is a timed quiz on JavaScript fundamentals that stores high scores, so that
 
 * If you decide to check scores during the quiz time, you will see there is only 1 button presented, which is a "Go Back" button, which will direct you back to your last quiz question.
 
-![Quiz Demo](./Assets/Quiz-Demo.gif)
+![Quiz Demo](./assets/Quiz-Demo.gif)
 
 ## Tests
 
