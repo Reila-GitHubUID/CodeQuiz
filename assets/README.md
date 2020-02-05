@@ -22,6 +22,8 @@ This is a timed quiz on JavaScript fundamentals that stores high scores, so that
 
 * If you decide to check scores during the quiz time, you will see there is only 1 button presented, which is a "Go Back" button, which will direct you back to your last quiz question.
 
+![Quiz Demo](./Assets/Quiz-Demo.gif)
+
 ## Tests
 
 * I wanted to add a feature where the "View Highscores" page sorts users ranking based on the highest score. Example: A user with the highest score will be ranked #1, and a user with the lowest score will be ranked the last.
